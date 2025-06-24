@@ -1,6 +1,7 @@
-# Installation
-
-Learn how to install MCP Agent and set up your development environment.
+---
+title: Installation
+description: "Learn how to install MCP Agent and set up your development environment."
+---
 
 ## Prerequisites
 
@@ -26,6 +27,7 @@ Learn how to install MCP Agent and set up your development environment.
     # Add MCP Agent to your project
     uv add "mcp-agent"
     ```
+
   </Tab>
   <Tab title="pip">
     ```bash
@@ -47,6 +49,7 @@ MCP Agent supports multiple LLM providers. Choose your preferred provider:
     # With pip
     pip install "mcp-agent[openai]"
     ```
+
   </Accordion>
 
   <Accordion title="Anthropic">
@@ -57,6 +60,7 @@ MCP Agent supports multiple LLM providers. Choose your preferred provider:
     # With pip
     pip install "mcp-agent[anthropic]"
     ```
+
   </Accordion>
 
   <Accordion title="Azure OpenAI">
@@ -67,6 +71,7 @@ MCP Agent supports multiple LLM providers. Choose your preferred provider:
     # With pip
     pip install "mcp-agent[azure]"
     ```
+
   </Accordion>
 
   <Accordion title="AWS Bedrock">
@@ -77,6 +82,7 @@ MCP Agent supports multiple LLM providers. Choose your preferred provider:
     # With pip
     pip install "mcp-agent[bedrock]"
     ```
+
   </Accordion>
 
   <Accordion title="Google Gemini">
@@ -87,6 +93,7 @@ MCP Agent supports multiple LLM providers. Choose your preferred provider:
     # With pip
     pip install "mcp-agent[google]"
     ```
+
   </Accordion>
 
   <Accordion title="All Providers">
@@ -97,6 +104,7 @@ MCP Agent supports multiple LLM providers. Choose your preferred provider:
     # With pip
     pip install "mcp-agent[openai,anthropic,azure,bedrock,google]"
     ```
+
   </Accordion>
 </AccordionGroup>
 
@@ -105,37 +113,44 @@ MCP Agent supports multiple LLM providers. Choose your preferred provider:
 MCP Agent works with MCP servers that provide tools, resources, and other capabilities.
 
 <CardGroup cols={2}>
-  <Card title="Fetch Server" icon="globe" href="https://github.com/modelcontextprotocol/servers/tree/main/src/fetch">
-    Web content fetching capabilities
-    ```bash
-    uvx install mcp-server-fetch
-    ```
+  <Card
+    title="Fetch Server"
+    icon="globe"
+    href="https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
+  >
+    Web content fetching capabilities ```bash uvx install mcp-server-fetch ```
   </Card>
-  
-  <Card title="Filesystem Server" icon="folder" href="https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem">
-    Local file system access
-    ```bash
-    npm install -g @modelcontextprotocol/server-filesystem
-    ```
-  </Card>
-  
-  <Card title="SQLite Server" icon="database" href="https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite">
-    SQLite database operations
-    ```bash
-    npm install -g @modelcontextprotocol/server-sqlite
-    ```
-  </Card>
-  
-  <Card title="Git Server" icon="git-branch" href="https://github.com/modelcontextprotocol/servers/tree/main/src/git">
-    Git repository operations
-    ```bash
-    uvx install mcp-server-git
-    ```
+
+<Card
+  title="Filesystem Server"
+  icon="folder"
+  href="https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem"
+>
+  Local file system access ```bash npm install -g
+  @modelcontextprotocol/server-filesystem ```
+</Card>
+
+<Card
+  title="SQLite Server"
+  icon="database"
+  href="https://github.com/modelcontextprotocol/servers/tree/main/src/sqlite"
+>
+  SQLite database operations ```bash npm install -g
+  @modelcontextprotocol/server-sqlite ```
+</Card>
+
+  <Card
+    title="Git Server"
+    icon="git-branch"
+    href="https://github.com/modelcontextprotocol/servers/tree/main/src/git"
+  >
+    Git repository operations ```bash uvx install mcp-server-git ```
   </Card>
 </CardGroup>
 
 <Info>
-  For more MCP servers, check out the [Awesome MCP Servers](https://github.com/punkpeye/awesome-mcp-servers) repository.
+  For more MCP servers, check out the [Awesome MCP
+  Servers](https://github.com/punkpeye/awesome-mcp-servers) repository.
 </Info>
 
 ## Verify Installation
@@ -148,22 +163,23 @@ import asyncio
 from mcp_agent.app import MCPApp
 
 async def test_installation():
-    app = MCPApp(name="test_app")
-    async with app.run() as mcp_agent_app:
-        logger = mcp_agent_app.logger
-        logger.info("MCP Agent installed successfully!")
-        print("✅ MCP Agent is working!")
+app = MCPApp(name="test_app")
+async with app.run() as mcp_agent_app:
+logger = mcp_agent_app.logger
+logger.info("MCP Agent installed successfully!")
+print("✅ MCP Agent is working!")
 
-if __name__ == "__main__":
-    asyncio.run(test_installation())
-```
+if **name** == "**main**":
+asyncio.run(test_installation())
+
+````
 </CodeGroup>
 
 Run the test:
 
 ```bash
 python test_mcp_agent.py
-```
+````
 
 <Check>
   You should see output confirming that MCP Agent is working correctly.
@@ -187,6 +203,7 @@ python test_mcp_agent.py
     # Install development dependencies
     uv pip install -r requirements-dev.txt
     ```
+
   </Step>
   
   <Step title="Run Examples">
@@ -204,6 +221,7 @@ python test_mcp_agent.py
     # Run the example
     uv run main.py
     ```
+
   </Step>
 </Steps>
 
@@ -221,6 +239,7 @@ python test_mcp_agent.py
     # Then install servers
     npm install -g @modelcontextprotocol/server-filesystem
     ```
+
   </Accordion>
 
   <Accordion title="Python Version Issues">
@@ -240,6 +259,7 @@ python test_mcp_agent.py
     pyenv install 3.11.0
     pyenv global 3.11.0
     ```
+
   </Accordion>
 
   <Accordion title="Network Issues">
@@ -253,6 +273,7 @@ python test_mcp_agent.py
     npm config set proxy http://proxy.server:port
     npm config set https-proxy http://proxy.server:port
     ```
+
   </Accordion>
 </AccordionGroup>
 

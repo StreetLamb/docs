@@ -1,6 +1,7 @@
-# Quick Start
-
-Build your first MCP Agent in 5 minutes! This guide will walk you through creating a simple agent that can read files and fetch web content.
+---
+title: Quick Start
+description: "Build your first MCP Agent in 5 minutes! This guide will walk you through creating a simple agent that can read files and fetch web content."
+---
 
 <Info>
   Make sure you have [installed MCP Agent](/installation) before proceeding.
@@ -13,15 +14,10 @@ We'll create a "finder" agent that has access to two MCP servers:
 - **Filesystem Server**: For reading local files
 
 <Frame>
-  ```
-  ┌──────────┐      ┌──────────────┐
-  │  Finder  │──┬──▶│  Fetch       │
-  │  Agent   │  │   │  MCP Server  │
-  └──────────┘  │   └──────────────┘
-                │   ┌──────────────┐
-                └──▶│  Filesystem  │
-                    │  MCP Server  │
-                    └──────────────┘
+  ```mermaid
+flowchart LR
+    A[Finder Agent] --> B[MCP Server]
+    A --> C[Filesystem MCP Server]
   ```
 </Frame>
 
@@ -180,7 +176,6 @@ if __name__ == "__main__":
 
 You should see output similar to this:
 
-<Frame>
   ```
   🔍 Reading local file...
   📄 Result: I've created a README.md file with basic project information. Here's its contents:
@@ -202,7 +197,6 @@ You should see output similar to this:
   🐦 Tweet: Anthropic's research reveals key patterns for building effective AI agents: 
   parallel processing, routing, and human feedback loops. #AI #Agents
   ```
-</Frame>
 
 ## What Just Happened?
 

@@ -16,7 +16,7 @@
           {
             "group": "Get Started",
             "pages": [
-              "introduction",
+              "index",
               "installation",
               "quickstart",
               "configuration"
@@ -118,8 +118,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "https://private-user-images.githubusercontent.com/25641935/451110683-c8d059e5-bd56-4ea2-a72d-807fb4897bde.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTA3ODA1NzksIm5iZiI6MTc1MDc4MDI3OSwicGF0aCI6Ii8yNTY0MTkzNS80NTExMTA2ODMtYzhkMDU5ZTUtYmQ1Ni00ZWEyLWE3MmQtODA3ZmI0ODk3YmRlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA2MjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNjI0VDE1NTExOVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc0NzUxNzY5YjQzM2RmNjBiMjdkYzZmNDgxZmEzMDQ4MzkxNTU1ZTg5NDM5MWNjYjAwMzVkMTI4ZDIwYzg3MzImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.1VrELud40IcnFAzLUpkh3zPyKcUM_6NxS3vfg5nmPkI",
+    "dark": "https://private-user-images.githubusercontent.com/25641935/451110683-c8d059e5-bd56-4ea2-a72d-807fb4897bde.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTA3ODA1NzksIm5iZiI6MTc1MDc4MDI3OSwicGF0aCI6Ii8yNTY0MTkzNS80NTExMTA2ODMtYzhkMDU5ZTUtYmQ1Ni00ZWEyLWE3MmQtODA3ZmI0ODk3YmRlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA2MjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwNjI0VDE1NTExOVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc0NzUxNzY5YjQzM2RmNjBiMjdkYzZmNDgxZmEzMDQ4MzkxNTU1ZTg5NDM5MWNjYjAwMzVkMTI4ZDIwYzg3MzImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.1VrELud40IcnFAzLUpkh3zPyKcUM_6NxS3vfg5nmPkI"
   },
   "navbar": {
     "links": [
