@@ -17,7 +17,7 @@
             "group": "Get Started",
             "pages": [
               "introduction",
-              "installation", 
+              "installation",
               "quickstart",
               "configuration"
             ]
@@ -131,7 +131,7 @@
     "primary": {
       "type": "button",
       "label": "Get Started",
-      "href": "/introduction"
+      "href": "https://github.com/lastmile-ai/mcp-agent"
     }
   },
   "footer": {
