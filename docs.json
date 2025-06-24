@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "MCP Agent",
   "colors": {
     "primary": "#16A34A",
     "light": "#07C983",
@@ -11,45 +11,87 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
             "group": "Get Started",
             "pages": [
-              "index",
+              "introduction",
+              "installation", 
               "quickstart",
-              "development"
+              "configuration"
             ]
           },
           {
-            "group": "Essentials",
+            "group": "Core Concepts",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "concepts/agents",
+              "concepts/mcp-servers",
+              "concepts/augmented-llms"
+            ]
+          },
+          {
+            "group": "MCP Protocol",
+            "pages": [
+              "mcp/overview",
+              "mcp/tools",
+              "mcp/resources",
+              "mcp/prompts",
+              "mcp/roots",
+              "mcp/server-management"
+            ]
+          },
+          {
+            "group": "Workflow Patterns",
+            "pages": [
+              "workflows/overview",
+              "workflows/parallel",
+              "workflows/router",
+              "workflows/intent-classifier",
+              "workflows/evaluator-optimizer",
+              "workflows/orchestrator",
+              "workflows/swarm"
+            ]
+          },
+          {
+            "group": "Model Providers",
+            "pages": [
+              "providers/openai",
+              "providers/anthropic",
+              "providers/azure",
+              "providers/bedrock",
+              "providers/google",
+              "providers/ollama"
+            ]
+          },
+          {
+            "group": "Integration Examples",
+            "pages": [
+              "integrations/streamlit",
+              "integrations/claude-desktop",
+              "integrations/jupyter",
+              "integrations/filesystem"
+            ]
+          },
+          {
+            "group": "Advanced Features",
+            "pages": [
+              "advanced/human-input",
+              "advanced/composition",
+              "advanced/custom-servers",
+              "advanced/monitoring",
+              "advanced/temporal"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "SDK Reference",
         "groups": [
           {
             "group": "API Documentation",
             "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api/introduction"
             ]
           }
         ]
@@ -58,19 +100,19 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "GitHub",
+          "href": "https://github.com/lastmile-ai/mcp-agent",
+          "icon": "github"
         },
         {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "anchor": "Discord",
+          "href": "https://lmai.link/discord/mcp-agent",
+          "icon": "discord"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "MCP Protocol",
+          "href": "https://modelcontextprotocol.io/introduction",
+          "icon": "link"
         }
       ]
     }
@@ -82,21 +124,21 @@
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Examples",
+        "href": "https://github.com/lastmile-ai/mcp-agent/tree/main/examples"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Get Started",
+      "href": "/introduction"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/lastmileai",
+      "github": "https://github.com/lastmile-ai/mcp-agent",
+      "discord": "https://lmai.link/discord/mcp-agent"
     }
   }
 }

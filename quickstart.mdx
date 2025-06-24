@@ -1,97 +1,266 @@
----
-title: 'Quickstart'
-description: 'Start building awesome documentation in under 5 minutes'
----
+# Quick Start
 
-## Setup your development
+Build your first MCP Agent in 5 minutes! This guide will walk you through creating a simple agent that can read files and fetch web content.
 
-Learn how to update your docs locally and deploy them to the public.
+<Info>
+  Make sure you have [installed MCP Agent](/installation) before proceeding.
+</Info>
 
-### Edit and preview
+## Overview
 
-<AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 
-    1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: ``` npm i -g mintlify ```
-    2. Run the following command at the root of your documentation (where
-    `docs.json` is): ``` mintlify dev ```
-    <Note>
-      If you’re currently using the legacy ```mint.json``` configuration file, please update the Mintlify CLI:
+We'll create a "finder" agent that has access to two MCP servers:
+- **Fetch Server**: For retrieving web content
+- **Filesystem Server**: For reading local files
 
+<Frame>
+  ```
+  ┌──────────┐      ┌──────────────┐
+  │  Finder  │──┬──▶│  Fetch       │
+  │  Agent   │  │   │  MCP Server  │
+  └──────────┘  │   └──────────────┘
+                │   ┌──────────────┐
+                └──▶│  Filesystem  │
+                    │  MCP Server  │
+                    └──────────────┘
+  ```
+</Frame>
 
-      ```npm i -g mintlify@latest```
-      And run the new upgrade command in your docs repository:
+## Step 1: Set Up Your Project
 
-      ```mintlify upgrade```
-      You should now be using the new ```docs.json``` configuration file. Feel free to delete the ```mint.json``` file from your repository.
-    </Note>
-  </Accordion>
-</AccordionGroup>
+<Steps>
+  <Step title="Create a new directory">
+    ```bash
+    mkdir my-first-agent
+    cd my-first-agent
+    ```
+  </Step>
 
-### Deploy your changes
+  <Step title="Install dependencies">
+    <Tabs>
+      <Tab title="uv">
+        ```bash
+        uv init
+        uv add "mcp-agent[openai]"
+        ```
+      </Tab>
+      <Tab title="pip">
+        ```bash
+        python -m venv .venv
+        source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+        pip install "mcp-agent[openai]"
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
 
-<AccordionGroup>
+  <Step title="Install MCP servers">
+    ```bash
+    # Install fetch server
+    uvx install mcp-server-fetch
 
-<Accordion icon="message-bot" title="Install our Github app">
-  Our Github app automatically deploys your changes to your docs site, so you
-  don't need to manage deployments yourself. You can find the link to install on
-  your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-  successfully installed, there should be a check mark next to the commit hash
-  of the repo.
-</Accordion>
-<Accordion icon="rocket" title="Push your changes">
-  [Commit and push your changes to
-  Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-  for your changes to update in your docs site. If you push and don't see that
-  the Github app successfully deployed your changes, you can also manually
-  update your docs through our [dashboard](https://dashboard.mintlify.com).
-</Accordion>
+    # Install filesystem server (requires Node.js)
+    npm install -g @modelcontextprotocol/server-filesystem
+    ```
+  </Step>
+</Steps>
 
-</AccordionGroup>
+## Step 2: Configure Your Agent
 
-## Update your docs
+Create two configuration files:
 
-Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
+<CodeGroup>
+```yaml mcp_agent.config.yaml
+execution_engine: asyncio
+logger:
+  transports: [console]
+  level: info
 
-<CardGroup>
+mcp:
+  servers:
+    fetch:
+      command: "uvx"
+      args: ["mcp-server-fetch"]
+      description: "Fetch content from URLs"
+    
+    filesystem:
+      command: "npx"
+      args: ["-y", "@modelcontextprotocol/server-filesystem", "."]
+      description: "Read and write local files"
 
-<Card title="Add Content With MDX" icon="file" href="/essentials/markdown">
-  Add content to your docs with MDX syntax.
-</Card>
+openai:
+  default_model: gpt-4o
+```
 
-<Card
-  title="Add Code Blocks"
-  icon="square-code"
-  href="/essentials/code"
->
-  Add code directly to your docs with syntax highlighting.
-</Card>
+```yaml mcp_agent.secrets.yaml
+openai:
+  api_key: "your-openai-api-key-here"
+```
+</CodeGroup>
 
-<Card
-  title="Add Images"
-  icon="image"
-  href="/essentials/images"
->
-  Add images to your docs to make them more engaging.
-</Card>
+<Warning>
+  Replace `"your-openai-api-key-here"` with your actual OpenAI API key. You can get one from the [OpenAI platform](https://platform.openai.com/api-keys).
+</Warning>
 
-<Card
-  title="Add Custom Components"
-  icon="puzzle-piece"
-  href="/essentials/reusable-snippets"
->
-  Add templates to your docs to make them more reusable.
-</Card>
+## Step 3: Create Your Agent
 
+Create a file called `main.py`:
+
+<CodeGroup>
+```python main.py
+import asyncio
+from mcp_agent.app import MCPApp
+from mcp_agent.agents.agent import Agent
+from mcp_agent.workflows.llm.augmented_llm_openai import OpenAIAugmentedLLM
+
+# Create the MCP app
+app = MCPApp(name="finder_agent")
+
+async def main():
+    async with app.run() as mcp_agent_app:
+        logger = mcp_agent_app.logger
+        
+        # Create an agent with access to fetch and filesystem servers
+        finder_agent = Agent(
+            name="finder",
+            instruction="""You can read local files or fetch URLs.
+                Return the requested information when asked.""",
+            server_names=["fetch", "filesystem"]
+        )
+
+        async with finder_agent:
+            # List available tools
+            tools = await finder_agent.list_tools()
+            logger.info("Available tools:", data=[tool.name for tool in tools])
+
+            # Attach an OpenAI LLM to the agent
+            llm = await finder_agent.attach_llm(OpenAIAugmentedLLM)
+
+            # Example 1: Read a local file
+            print("\n🔍 Reading local file...")
+            result = await llm.generate_str(
+                "Create a simple README.md file, then show me its contents"
+            )
+            print(f"📄 Result: {result}")
+
+            # Example 2: Fetch web content
+            print("\n🌐 Fetching web content...")
+            result = await llm.generate_str(
+                "Fetch the first two paragraphs from https://www.anthropic.com/research/building-effective-agents"
+            )
+            print(f"📰 Result: {result}")
+
+            # Example 3: Multi-turn conversation
+            print("\n💬 Multi-turn conversation...")
+            result = await llm.generate_str(
+                "Summarize that content in a 140-character tweet"
+            )
+            print(f"🐦 Tweet: {result}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+</CodeGroup>
+
+## Step 4: Run Your Agent
+
+<Tabs>
+  <Tab title="uv">
+    ```bash
+    uv run main.py
+    ```
+  </Tab>
+  <Tab title="python">
+    ```bash
+    python main.py
+    ```
+  </Tab>
+</Tabs>
+
+## Expected Output
+
+You should see output similar to this:
+
+<Frame>
+  ```
+  🔍 Reading local file...
+  📄 Result: I've created a README.md file with basic project information. Here's its contents:
+
+  # My First Agent
+  
+  This is a simple MCP Agent that can read files and fetch web content.
+  
+  ## Features
+  - File system access
+  - Web content fetching
+  - Multi-turn conversations
+
+  🌐 Fetching web content...
+  📰 Result: According to Anthropic's research on building effective agents, 
+  there are several key patterns for creating robust AI systems...
+
+  💬 Multi-turn conversation...
+  🐦 Tweet: Anthropic's research reveals key patterns for building effective AI agents: 
+  parallel processing, routing, and human feedback loops. #AI #Agents
+  ```
+</Frame>
+
+## What Just Happened?
+
+<CardGroup cols={2}>
+  <Card title="Agent Creation" icon="robot">
+    You created an agent with specific instructions and access to two MCP servers
+  </Card>
+  <Card title="Tool Discovery" icon="search">
+    The agent automatically discovered available tools from connected MCP servers
+  </Card>
+  <Card title="LLM Integration" icon="brain">
+    You attached an OpenAI LLM that can use the discovered tools
+  </Card>
+  <Card title="Multi-turn Chat" icon="comments">
+    The agent maintains conversation context across multiple interactions
+  </Card>
 </CardGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="OpenAI API Key Error">
+    Make sure your API key is correctly set in `mcp_agent.secrets.yaml` and that you have credits in your OpenAI account.
+  </Accordion>
+  
+  <Accordion title="MCP Server Not Found">
+    Ensure the MCP servers are installed:
+    ```bash
+    # Check if fetch server is installed
+    uvx list | grep mcp-server-fetch
+    
+    # Check if filesystem server is installed
+    npm list -g @modelcontextprotocol/server-filesystem
+    ```
+  </Accordion>
+  
+  <Accordion title="Permission Denied">
+    The filesystem server can only access files in the directory you specify. Make sure the current directory (`.`) is accessible.
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Learn Core Concepts" icon="graduation-cap" href="/concepts/agents">
+    Understand how agents, MCP servers, and LLMs work together
+  </Card>
+  <Card title="Explore Workflow Patterns" icon="diagram-project" href="/workflows/overview">
+    Discover advanced patterns like parallel processing and routing
+  </Card>
+  <Card title="Try Different Providers" icon="shuffle" href="/providers/anthropic">
+    Use Anthropic Claude, Azure, or other LLM providers
+  </Card>
+  <Card title="Build Integrations" icon="plug" href="/integrations/streamlit">
+    Create web apps, Claude Desktop integrations, and more
+  </Card>
+</CardGroup>
+
+<Tip>
+  Check out the [examples directory](https://github.com/lastmile-ai/mcp-agent/tree/main/examples) for 30+ working examples covering different use cases and patterns.
+</Tip>
